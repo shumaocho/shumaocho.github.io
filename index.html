@@ -15,6 +15,7 @@
             --secondary-color: #2196F3;
             --accent-color: #FF9800;
             --header-bg: rgba(76, 175, 80, 0.9);
+            --notice-tag-bg: #FF5722; /* 公告标签背景色 */
         }
 
         .dark-mode {
@@ -26,6 +27,7 @@
             --secondary-color: #64B5F6;
             --accent-color: #FFB74D;
             --header-bg: rgba(38, 50, 39, 0.9);
+            --notice-tag-bg: #FF7043; /* 深色模式公告标签色 */
         }
 
         * {
@@ -93,6 +95,41 @@
             padding-bottom: 5px;
         }
 
+        /* 美化后的服务器状态查询样式 */
+        .server-status-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+        }
+        .status-item {
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-label {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        #serverStatus.online {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        #serverStatus.offline {
+            color: #F44336;
+            font-weight: 700;
+        }
+        #playerCount {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -153,6 +190,47 @@
             color: var(--primary-color);
         }
 
+        /* 公告功能样式 */
+        .announcements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .announcement-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .announcement-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: var(--notice-tag-bg);
+            color: white;
+            font-size: 0.8em;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 0 0 8px 0;
+        }
+        .announcement-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin: 10px 0 15px;
+            font-weight: 700;
+        }
+        .announcement-time {
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 15px;
+        }
+        .announcement-content {
+            line-height: 1.8;
+        }
+
         .mode-toggle {
             position: fixed;
             bottom: 20px;
@@ -200,8 +278,17 @@
                 margin-top: 15px;
             }
             
-            .features {
+            .features, .announcements {
                 grid-template-columns: 1fr;
+            }
+            
+            .server-status-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .announcement-card {
+                padding: 15px;
             }
         }
     </style>
@@ -218,6 +305,22 @@
                 <div class="qq-group">QQ群：849593519</div>
             </div>
         </header>
+
+        <!-- 美化后的服务器状态查询模块 -->
+        <div class="server-status-container">
+            <div class="status-item">
+                <span class="status-label">服务器地址：</span>
+                <span>om.rainplay.cn:19163</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">服务器状态：</span>
+                <span id="serverStatus" class="loading">加载中...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">当前在线人数：</span>
+                <span id="playerCount">加载中...</span>
+            </div>
+        </div>
 
         <div class="features">
             <div class="feature-card">
@@ -246,7 +349,7 @@
                         <li>使用命令: <span class="command">/mgift &lt;玩家&gt;</span></li>
                         <li>手持物品轻松转赠，好友互动从未如此简单</li>
                         <li>支持全物品类型（包括附魔装备/NBT物品）</li>
-       <li>自动检测背包空间，拒绝物品丢失</li>
+                        <li>自动检测背包空间，拒绝物品丢失</li>
                     </ul>
                 </div>
             </div>
@@ -301,9 +404,35 @@
                 <div class="feature-content">
                     <ul>
                         <li>枪械模组</li>
-                        <li>更多好玩的枪械</li>
-                        <li>再也不用惧怕火力不足了</li>
+                        <li>有这更多好玩的枪炮（枪炮是不长眼的）</li>
+                        <li>妈妈再也不用担心我火力不足了（一切恐惧来源于火力不足）</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增双板块公告功能 -->
+        <div class="announcements">
+            <div class="announcement-card">
+                <div class="announcement-tag">公告</div>
+                <div class="announcement-title">（请输入公告标题）</div>
+                <div class="announcement-time">（请输入时间）2025年9月23日22:02:37</div>
+                <div class="announcement-content">
+                    本次网页更新了公告板块以及查询服务器在线功能<br>
+                   本次公告暂时未同步服务器更新日志<br>
+                    （请输入文本）
+                    （可以输入更多文本）
+                </div>
+            </div>
+            <div class="announcement-card">
+                <div class="announcement-tag">公告</div>
+                <div class="announcement-title">（请输入公告标题）</div>
+                <div class="announcement-time">（请输入时间）</div>
+                <div class="announcement-content">
+                    （请输入文本）<br>
+                   （请输入文本）<br>
+                    （请输入文本）<br>
+                    （可以输入更多文本）
                 </div>
             </div>
         </div>
@@ -319,11 +448,42 @@
 
     <button class="mode-toggle" id="modeToggle">🌙</button>
 
+    <!-- 服务器状态查询脚本 -->
+    <script>
+        const apiUrl = "https://api.mcsrvstat.us/2/om.rainplay.cn:19163";
+        const statusElem = document.getElementById("serverStatus");
+        const countElem = document.getElementById("playerCount");
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("请求失败");
+                return response.json();
+            })
+            .then(data => {
+                if (data.online) {
+                    statusElem.textContent = "在线";
+                    statusElem.className = "online";
+                    const players = data.players;
+                    countElem.textContent = `${players.online}${players.max ? '/' + players.max : ''} 人`;
+                } else {
+                    statusElem.textContent = "❌ 离线（请联系管理员反馈）";
+                    statusElem.className = "offline";
+                    countElem.textContent = "0 人";
+                }
+            })
+            .catch(error => {
+                statusElem.textContent = "❌ 查询失败（请联系管理员反馈）";
+                statusElem.className = "offline";
+                countElem.textContent = "未知（请联系管理员反馈）";
+                console.log("错误原因：", error);
+            });
+    </script>
+
+    <!-- 深色模式切换脚本 -->
     <script>
         const modeToggle = document.getElementById('modeToggle');
         const body = document.body;
 
-        // 检查本地存储中的模式设置
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
             modeToggle.textContent = '☀️';
